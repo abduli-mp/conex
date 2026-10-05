@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <header className="border-b border-border">
       <div className="mx-auto w-full md:max-w-[60%] px-10 lg:px-0">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-16 items-center lg:items-end justify-between">
           {/* Logo */}
           <Link to="/" className="shrink-0 flex items-end">
             <div
@@ -47,7 +47,7 @@ export default function Header() {
                     <span>{label}</span>
 
                     <span
-                      className={`absolute -bottom-1 left-0 h-px bg-current transition-all duration-300 ease-out ${
+                      className={`absolute -bottom-[1px] left-0 h-px bg-current transition-all duration-300 ease-out ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
@@ -73,6 +73,8 @@ export default function Header() {
               transition-transform
               duration-150
               hover:-translate-y-0.5
+              hover:bg-blue-700
+              hover:text-[#f5f5f5]
               active:translate-y-0
               md:inline-flex
             "
@@ -130,7 +132,10 @@ export default function Header() {
             menuOpen ? "max-h-80 pb-5 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <nav className="flex flex-col border-t border-border pt-4">
+          <nav
+            className="flex flex-col border-t border-border pt-4 
+              font-mono"
+          >
             {links.map(({ to, label }) => (
               <NavLink
                 key={to}
