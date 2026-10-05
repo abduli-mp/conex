@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Background */
+  --color-background: #0a0a0a;
+
+  /* Surfaces */
+  --color-surface: #111111;
+  --color-surface-hover: #181818;
+
+  /* Text */
+  --color-foreground: #f5f5f5;
+  --color-muted: #a3a3a3;
+
+  /* Borders */
+  --color-border: #292929;
+  --color-border-subtle: #1f1f1f;
+
+  /* Bun orange */
+  --color-primary: #f47216;
+  --color-primary-hover: #ff8a3d;
+
+  /* Warm Bun tones */
+  --color-warm: #f9f1e7;
+  --color-warm-muted: #f5e8d5;
+
+  /* Status */
+  --color-success: #16a34a;
+  --color-warning: #eab308;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.2);
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25), 0 4px 16px rgb(0 0 0 / 0.2);
+
+  /* Animation */
+  --ease-bun: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Global */
+html,
+body {
+  background: #0a0a0a;
+  color: #f5f5f5;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+}
