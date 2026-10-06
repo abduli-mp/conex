@@ -2,8 +2,9 @@
 
 @theme {
   /* Fonts */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-inter: "Inter", sans-serif;
 
   /* Background */
   --color-background: #0a0a0a;

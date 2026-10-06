@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <div className="mx-auto md:max-w-[60%] w-full border-l border-r border-border px-7 py-8 sm:px-8 sm:py-10 md:px-10 lg:py-12">
+    <div className="mx-auto md:max-w-[60%] w-full md:border-l md:border-r md:border-border px-7 py-8 sm:px-8 sm:py-10 md:px-10 lg:py-12">
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-10">
         <h1 className="font-mono text-5xl leading-[0.95] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
           Get <span className="text-blue-700">help</span> from <span className="text-blue-700">engineers</span>.

@@ -1,0 +1,54 @@
+export default function SiteUnderConstruction() {
+  return (
+    <div
+      className="
+        flex
+        min-h-[calc(100svh-120px)]
+        w-full
+        overflow-hidden
+        flex-col
+        items-center
+        justify-center
+        gap-3
+        bg-background
+        px-5
+        text-center
+        sm:gap-4
+        sm:px-8
+        md:gap-5
+      "
+    >
+      <h1
+        className="
+          font-jet
+          text-2xl
+          font-medium
+          leading-tight
+          tracking-tight
+          text-text
+          sm:text-4xl
+          md:text-5xl
+          lg:text-6xl
+        "
+      >
+        _Site_Under_Construction
+      </h1>
+
+      <p
+        className="
+          max-w-[90%]
+          font-mono
+          text-xs
+          leading-relaxed
+          text-muted
+          sm:max-w-md
+          sm:text-sm
+          md:max-w-lg
+          md:text-base
+        "
+      >
+        This page is being updated. Please check back later.
+      </p>
+    </div>
+  );
+}
