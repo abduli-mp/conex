@@ -1,63 +1,104 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-400.woff") format("woff");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/poppins-500.woff") format("woff");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/poppins-700.woff") format("woff");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-400.woff") format("woff");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-700.woff") format("woff");
+}
+
 @theme {
-  /* Fonts */
-  --font-sans: "Poppins", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-  --font-inter: "Inter", sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Background */
-  --color-background: #0a0a0a;
+  --color-background: #ffffff;
+  --color-surface: #f4f7fe;
+  --color-surface-hover: #e9effc;
 
-  /* Surfaces */
-  --color-surface: #111111;
-  --color-surface-hover: #181818;
+  --color-foreground: #0b1633;
+  --color-muted: #4f5b78;
 
-  /* Text */
-  --color-foreground: #f5f5f5;
-  --color-muted: #a3a3a3;
+  --color-border: #d3dbee;
+  --color-border-subtle: #e4e9f5;
 
-  /* Borders */
-  --color-border: #292929;
-  --color-border-subtle: #1f1f1f;
+  --color-primary: var(--color-blue-700);
+  --color-primary-hover: var(--color-blue-800);
+  --color-primary-soft: var(--color-blue-50);
+  --color-primary-soft-hover: var(--color-blue-100);
 
-  /* Bun orange */
-  --color-primary: #f47216;
-  --color-primary-hover: #ff8a3d;
+  --color-success: #1f7a45;
+  --color-warning: #a56a12;
+  --color-error: #b93a2f;
 
-  /* Warm Bun tones */
-  --color-warm: #f9f1e7;
-  --color-warm-muted: #f5e8d5;
-
-  /* Status */
-  --color-success: #16a34a;
-  --color-warning: #eab308;
-  --color-error: #dc2626;
-  --color-info: #2563eb;
-
-  /* Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-
-  /* Shadows */
-  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.2);
-
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25), 0 4px 16px rgb(0 0 0 / 0.2);
-
-  /* Animation */
-  --ease-bun: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card:
+    0 1px 2px rgb(11 22 51 / 0.06),
+    0 8px 24px rgb(11 22 51 / 0.08);
 }
 
-/* Global */
-html,
-body {
-  background: #0a0a0a;
-  color: #f5f5f5;
+@utility cut-corner {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
 }
 
-body {
-  margin: 0;
-  font-family: var(--font-sans);
+@utility shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
 }

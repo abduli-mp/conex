@@ -1,136 +1,122 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
+
+import { btnPrimary, inputClass } from "../components/ui";
+import { useLang } from "../i18n/useLang";
 
 export default function AuthForm() {
-  const [activeTab, setActiveTab] = useState("login");
-
+  const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const [submitted, setSubmitted] = useState(false);
+  const { t } = useLang();
+  const a = t.auth;
   const isLogin = activeTab === "login";
 
+  const switchTab = (tab: "login" | "signup") => {
+    setActiveTab(tab);
+    setSubmitted(false);
+  };
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setSubmitted(true);
+  };
+
+  const tabClass = (active: boolean) =>
+    `cursor-pointer border-b-2 px-4 py-3 font-mono text-sm transition-colors ${
+      active
+        ? "border-primary text-primary"
+        : "border-transparent text-muted hover:text-foreground"
+    }`;
+
   return (
-    <div
-      className="
-        relative
-        min-h-[calc(100svh-65px)]
-        w-full
-        overflow-hidden
-      "
-    >
-      <div
-        className="
-          mx-auto
-          flex
-          h-full
-          min-h-[calc(100svh-65px)]
-          w-full
-          items-center
-          justify-center
-          border-border
-          sm:border-r
-          sm:border-l
-          px-4
-          sm:px-6
-          md:px-0
-          lg:max-w-[60%]
-        "
-      >
-        <div className="w-full max-w-md border border-border">
-          <div className="grid grid-cols-2 border-b border-border transition delay-150 duration-300 ease-in-out">
-            <button
-              type="button"
-              onClick={() => setActiveTab("login")}
-              className={`border-b-2 px-3 py-3 font-mono text-sm transition-colors cursor-pointer sm:px-4 ${
-                isLogin
-                  ? "border-text border-blue-700 text-blue-700"
-                  : "border-transparent text-muted hover:text-text"
-              }`}
-            >
-              Login
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab("signup")}
-              className={`border-b-2 px-3 py-3 font-mono text-sm transition-colors cursor-pointer sm:px-4 ${
-                !isLogin
-                  ? "border-text border-blue-700 text-blue-700"
-                  : "border-transparent text-muted hover:text-text"
-              }`}
-            >
-              Sign up
-            </button>
-          </div>
-
-          <div className="px-5 py-7 sm:px-8 sm:py-8">
-            <h1 className="font-poppins text-2xl font-semibold sm:text-3xl">
-              {isLogin ? "Welcome back." : "Create account."}
-            </h1>
-
-            <p className="mt-2 font-poppins text-sm text-muted">
-              {isLogin
-                ? "Log in to manage your support requests."
-                : "Create your account to get better results."}
-            </p>
-          </div>
-
-          <form className="space-y-4 px-5 pb-7 sm:px-8 sm:pb-8">
-            {!isLogin && (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First name"
-                  required
-                  className="h-12 w-full border border-border bg-transparent px-4 font-poppins text-sm outline-none placeholder:text-muted focus:border-text"
-                />
-
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last name"
-                  required
-                  className="h-12 w-full border border-border bg-transparent px-4 font-poppins text-sm outline-none placeholder:text-muted focus:border-text"
-                />
-              </div>
-            )}
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              required
-              className="h-12 w-full border border-border bg-transparent px-4 font-poppins text-sm outline-none placeholder:text-muted focus:border-text"
-            />
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              className="h-12 w-full border border-border bg-transparent px-4 font-poppins text-sm outline-none placeholder:text-muted focus:border-text"
-            />
-
-            {isLogin && (
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  className="font-mono text-xs text-muted hover:text-text"
-                >
-                  Forgot password?
-                </button>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="h-12 w-full cursor-pointer bg-text font-mono text-sm text-bg transition-opacity hover:opacity-80 bg-blue-700"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%)",
-              }}
-            >
-              {isLogin ? "Login" : "Create account"}
-            </button>
-          </form>
+    <div className="flex flex-1 items-center justify-center bg-surface px-4 py-10">
+      <div className="w-full max-w-md border border-border bg-background shadow-card">
+        <div className="grid grid-cols-2 border-b border-border">
+          <button
+            type="button"
+            onClick={() => switchTab("login")}
+            className={tabClass(isLogin)}
+          >
+            {a.login}
+          </button>
+          <button
+            type="button"
+            onClick={() => switchTab("signup")}
+            className={tabClass(!isLogin)}
+          >
+            {a.signup}
+          </button>
         </div>
+
+        <div className="px-6 py-7 sm:px-8">
+          <h1 className="text-2xl font-bold sm:text-3xl">
+            {isLogin ? a.loginTitle : a.signupTitle}
+          </h1>
+          <p className="mt-2 text-sm text-muted">
+            {isLogin ? a.loginText : a.signupText}
+          </p>
+        </div>
+
+        <form onSubmit={onSubmit} className="space-y-4 px-6 pb-8 sm:px-8">
+          {!isLogin && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <input
+                type="text"
+                name="firstName"
+                placeholder={a.firstName}
+                aria-label={a.firstName}
+                required
+                className={inputClass}
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder={a.lastName}
+                aria-label={a.lastName}
+                required
+                className={inputClass}
+              />
+            </div>
+          )}
+
+          <input
+            type="email"
+            name="email"
+            placeholder={a.email}
+            aria-label={a.email}
+            required
+            className={inputClass}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder={a.password}
+            aria-label={a.password}
+            required
+            className={inputClass}
+          />
+
+          {isLogin && (
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="cursor-pointer font-mono text-xs text-muted hover:text-primary"
+              >
+                {a.forgot}
+              </button>
+            </div>
+          )}
+
+          <button type="submit" className={`${btnPrimary} w-full`}>
+            {isLogin ? a.submitLogin : a.submitSignup}
+          </button>
+
+          {submitted && (
+            <p role="status" className="font-mono text-xs text-muted">
+              {a.notice}
+            </p>
+          )}
+        </form>
       </div>
     </div>
   );

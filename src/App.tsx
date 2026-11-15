@@ -1,42 +1,58 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./components/HeaderC";
-import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import AuthForm from "./pages/UserCreate";
 import GoBack from "./components/GoBack";
+import LanguageProvider from "./i18n/LanguageProvider";
+import Home from "./pages/Home";
+import ServicesPage from "./pages/ServicesPage";
+import Contact from "./pages/Contact";
+import Ticket from "./pages/Ticket";
+import Imprint from "./pages/Imprint";
+import Privacy from "./pages/Privacy";
+import AuthForm from "./pages/UserCreate";
 import NotFound from "./pages/404";
-import SiteUnderConstruction from "./pages/UnderConstructions";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function Layout() {
-  const location = useLocation();
-
-  const isAuthPage = location.pathname === "/create-account";
+  const { pathname } = useLocation();
+  const isAuthPage = pathname === "/create-account";
 
   return (
-    <>
-      {!isAuthPage && <Header />}
-      {isAuthPage && <GoBack />}
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/features" element={<SiteUnderConstruction />} />
-        <Route path="/functions" element={<SiteUnderConstruction />} />
-        <Route path="/create-account" element={<AuthForm />} />
-      </Routes>
-
-      {/* {!isAuthPage && <Footer />} */}
+    <div className="flex min-h-svh flex-col">
+      <ScrollToTop />
+      {isAuthPage ? <GoBack /> : <Header />}
+      <main className="flex flex-1 flex-col">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/leistungen" element={<ServicesPage />} />
+          <Route path="/kontakt" element={<Contact />} />
+          <Route path="/create-ticket" element={<Ticket />} />
+          <Route path="/create-account" element={<AuthForm />} />
+          <Route path="/impressum" element={<Imprint />} />
+          <Route path="/datenschutz" element={<Privacy />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
-
-export default App;

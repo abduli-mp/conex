@@ -1,53 +1,21 @@
+import { Link } from "react-router-dom";
+
+import { btnPrimary } from "../components/ui";
+import { useLang } from "../i18n/useLang";
+
 export default function NotFound() {
+  const { t } = useLang();
+
   return (
-    <div
-      className="
-        flex
-        flex-col
-        items-center
-        justify-center
-        gap-3
-        bg-background
-        px-5
-        text-center
-        sm:gap-4
-        sm:px-8
-        md:gap-5
-        min-h-[calc(100svh-120px)]
-        w-full
-        overflow-hidden
-      "
-    >
-      <h1
-        className="
-          font-jet
-          text-3xl
-          font-medium
-          leading-tight
-          tracking-tight
-          text-text
-          sm:text-4xl
-          md:text-5xl
-          lg:text-6xl
-        "
-      >
-        404
+    <div className="flex min-h-[60svh] flex-col items-center justify-center gap-4 px-6 text-center">
+      <h1 className="font-mono text-6xl font-bold text-primary md:text-7xl">
+        {t.notFound.title}
       </h1>
-      <p
-        className="
-          max-w-[90%]
-          font-mono
-          text-xs
-          leading-relaxed
-          text-muted
-          sm:max-w-md
-          sm:text-sm
-          md:max-w-lg
-          md:text-base
-        "
-      >
-        _endpoints_Not_Found
-      </p>
+      <p className="font-mono text-sm text-muted">{t.notFound.code}</p>
+      <p className="max-w-sm text-muted">{t.notFound.text}</p>
+      <Link to="/" className={`${btnPrimary} mt-2`}>
+        {t.notFound.back}
+      </Link>
     </div>
   );
 }

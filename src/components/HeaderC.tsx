@@ -1,53 +1,55 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import Logo from "../assets/conex_white.png";
+import Logo from "../assets/conex_black.png";
+import LanguageSwitch from "./LanguageSwitch";
+import { btnPrimary } from "./ui";
+import { useLang } from "../i18n/useLang";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLang();
 
   const links = [
-    { to: "/", label: "index" },
-    { to: "/features", label: "Features" },
-    { to: "/functions", label: "Functions" },
+    { to: "/", label: t.nav.home },
+    { to: "/leistungen", label: t.nav.services },
+    { to: "/kontakt", label: t.nav.contact },
   ];
 
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `group relative flex items-center font-jet ${
-      isActive ? "font-medium" : "font-normal"
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    `group relative flex items-center py-2 font-mono text-sm ${
+      isActive ? "font-bold text-primary" : "text-foreground"
     }`;
 
   return (
-    <header className="border-b border-border sticky top-0 z-99 bg-background">
-      <div className="mx-auto w-full md:max-w-[60%] px-10 lg:px-0">
-        <div className="flex h-16 items-center lg:items-end justify-between">
-          {/* Logo */}
-          <Link to="/" className="shrink-0 flex items-end">
-            <div
-              className="h-15 w-15 bg-center bg-cover bg-no-repeat"
-              style={{ backgroundImage: `url(${Logo})` }}
-            />
-            <span className="font-mono">CONEX</span>
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
+      <div className="shell px-6 md:px-10">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Link to="/" className="flex shrink-0 items-center gap-3">
+            <img src={Logo} alt="" className="h-9 w-9" />
+            <span className="font-mono text-base font-bold tracking-wide">
+              CONEX
+            </span>
           </Link>
 
-          {/* Desktop navigation */}
-          <nav className="hidden items-center gap-5 md:flex font-mono">
+          <nav
+            aria-label={t.nav.primary}
+            className="hidden items-center gap-7 md:flex"
+          >
             {links.map(({ to, label }) => (
-              <NavLink key={to} to={to} end className={navLinkClass}>
+              <NavLink key={to} to={to} end className={linkClass}>
                 {({ isActive }) => (
                   <>
                     <span
-                      className={`relative transition-transform duration-300 ${
-                        isActive ? "-translate-x-2" : ""
-                      } group-hover:-translate-x-2`}
+                      className={`mr-1 text-primary transition-transform duration-300 ${
+                        isActive ? "-translate-x-1" : ""
+                      } group-hover:-translate-x-1`}
                     >
                       _
                     </span>
-
                     <span>{label}</span>
-
                     <span
-                      className={`absolute -bottom-[1px] left-0 h-px bg-current transition-all duration-300 ease-out ${
+                      className={`absolute -bottom-px left-0 h-0.5 bg-primary transition-all duration-300 ease-out ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
@@ -57,140 +59,78 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop sign in */}
-          <Link
-            to="/create-account"
-            className="
-              hidden
-              h-9
-              items-center
-              bg-[#f5f5f5]
-              px-4
-              font-mono
-              text-sm
-              font-medium
-              text-[#111]
-              transition-transform
-              duration-150
-              hover:-translate-y-0.5
-              hover:bg-blue-700
-              hover:text-[#f5f5f5]
-              active:translate-y-0
-              md:inline-flex
-            "
-            style={{
-              clipPath:
-                "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%)",
-            }}
-          >
-            Sign in
-          </Link>
+          <div className="hidden items-center gap-4 md:flex">
+            <LanguageSwitch />
+            <Link to="/create-account" className={`${btnPrimary} h-9`}>
+              {t.nav.signIn}
+            </Link>
+          </div>
 
-          {/* Mobile hamburger */}
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={t.nav.menu}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
-            className="
-              flex
-              h-10
-              w-10
-              items-center
-              justify-center
-              border
-              border-border
-              md:hidden
-              font-mono
-            "
+            className="flex h-10 w-10 cursor-pointer items-center justify-center border border-border md:hidden"
           >
             <span className="relative block h-4 w-5">
               <span
-                className={`absolute left-0 top-0 h-px w-5 bg-current transition-transform duration-200 ${
-                  menuOpen ? "translate-y-2 rotate-45" : ""
+                className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform duration-200 ${
+                  menuOpen ? "translate-y-[7px] rotate-45" : ""
                 }`}
               />
-
               <span
-                className={`absolute left-0 top-2 h-px w-5 bg-current transition-opacity duration-200 ${
+                className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity duration-200 ${
                   menuOpen ? "opacity-0" : "opacity-100"
                 }`}
               />
-
               <span
-                className={`absolute left-0 top-4 h-px w-5 bg-current transition-transform duration-200 ${
-                  menuOpen ? "-translate-y-2 -rotate-45" : ""
+                className={`absolute left-0 top-[14px] h-0.5 w-5 bg-current transition-transform duration-200 ${
+                  menuOpen ? "-translate-y-[7px] -rotate-45" : ""
                 }`}
               />
             </span>
           </button>
         </div>
 
-        {/* Mobile menu */}
         <div
           className={`overflow-hidden transition-all duration-300 md:hidden ${
-            menuOpen ? "max-h-80 pb-5 opacity-100" : "max-h-0 opacity-0"
+            menuOpen ? "max-h-96 pb-5 opacity-100" : "max-h-0 opacity-0"
           }`}
+          aria-hidden={!menuOpen}
         >
           <nav
-            className="flex flex-col border-t border-border pt-4 
-              font-mono"
+            aria-label={t.nav.primary}
+            className="flex flex-col border-t border-border pt-3"
           >
             {links.map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}
                 end
+                tabIndex={menuOpen ? 0 : -1}
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `group flex items-center py-3 font-jet text-sm ${
-                    isActive ? "font-medium" : "font-normal"
+                  `py-3 font-mono text-sm ${
+                    isActive ? "font-bold text-primary" : "text-foreground"
                   }`
                 }
               >
-                {({ isActive }) => (
-                  <>
-                    <span
-                      className={`mr-1 transition-transform duration-300 ${
-                        isActive ? "-translate-x-1" : ""
-                      } group-hover:-translate-x-1`}
-                    >
-                      _
-                    </span>
-
-                    <span>{label}</span>
-                  </>
-                )}
+                <span className="mr-1 text-primary">_</span>
+                {label}
               </NavLink>
             ))}
-
-            {/* Mobile sign in */}
-            <Link
-              to="/create-account"
-              onClick={() => setMenuOpen(false)}
-              className="
-                mt-3
-                inline-flex
-                h-9
-                w-fit
-                items-center
-                bg-[#f5f5f5]
-                px-4
-                font-mono
-                text-sm
-                font-medium
-                text-[#111]
-                transition-transform
-                duration-150
-                hover:-translate-y-0.5
-              "
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%)",
-              }}
-            >
-              Sign in
-            </Link>
+            <div className="mt-3 flex items-center gap-4">
+              <LanguageSwitch />
+              <Link
+                to="/create-account"
+                tabIndex={menuOpen ? 0 : -1}
+                onClick={() => setMenuOpen(false)}
+                className={`${btnPrimary} h-9`}
+              >
+                {t.nav.signIn}
+              </Link>
+            </div>
           </nav>
         </div>
       </div>
