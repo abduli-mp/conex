@@ -54,64 +54,6 @@ export default function Hero() {
             />
           ))}
         </div>
-
-        <div
-          aria-hidden="true"
-          className="relative w-full max-w-sm border border-border bg-background shadow-card"
-        >
-          <div className="flex items-center justify-between border-b border-border px-5 py-3">
-            <span className="font-mono text-xs text-muted">{card.label}</span>
-          </div>
-
-          <dl className="space-y-3 border-b border-border px-5 py-4 text-sm">
-            <div className="flex gap-4">
-              <dt className="w-16 shrink-0 font-mono text-xs text-muted">
-                {card.device}
-              </dt>
-              <dd className="font-medium">{card.deviceValue}</dd>
-            </div>
-            <div className="flex gap-4">
-              <dt className="w-16 shrink-0 font-mono text-xs text-muted">
-                {card.issue}
-              </dt>
-              <dd>{card.issueValue}</dd>
-            </div>
-          </dl>
-
-          <ol className="px-5 py-4">
-            {card.steps.map((step, index) => (
-              <li
-                key={step.label}
-                className="relative flex items-center gap-3 py-2"
-              >
-                {index < card.steps.length - 1 && (
-                  <span className="absolute left-[9px] top-[26px] h-full w-px bg-border" />
-                )}
-                <span
-                  className={`relative flex h-5 w-5 shrink-0 items-center justify-center border text-white ${
-                    step.state === "done"
-                      ? "border-primary bg-primary"
-                      : step.state === "current"
-                        ? "border-primary bg-background"
-                        : "border-border bg-background"
-                  }`}
-                >
-                  {step.state === "done" && <MdCheck size={14} />}
-                  {step.state === "current" && (
-                    <span className="h-2 w-2 bg-primary" />
-                  )}
-                </span>
-                <span
-                  className={`text-sm ${
-                    step.state === "todo" ? "text-muted" : "font-medium"
-                  }`}
-                >
-                  {step.label}
-                </span>
-              </li>
-            ))}
-          </ol>
-        </div>
       </div>
     </section>
   );
