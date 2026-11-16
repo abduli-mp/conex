@@ -3,10 +3,13 @@ import type { FormEvent } from "react";
 
 import { btnPrimary, inputClass } from "../components/ui";
 import { useLang } from "../i18n/useLang";
+import { supabase } from "../supabaseClient";
 
 export default function AuthForm() {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { t } = useLang();
   const a = t.auth;
   const isLogin = activeTab === "login";
@@ -14,11 +17,60 @@ export default function AuthForm() {
   const switchTab = (tab: "login" | "signup") => {
     setActiveTab(tab);
     setSubmitted(false);
+    setError(null);
   };
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSubmitted(false);
+    setLoading(true);
+
+    const form = new FormData(event.currentTarget);
+    const email = String(form.get("email") ?? "");
+    const password = String(form.get("password") ?? "");
+
+    if (isLogin) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        setSubmitted(true);
+        // App.tsx redirects automatically via onAuthStateChange
+      }
+    } else {
+      const firstName = String(form.get("firstName") ?? "");
+      const lastName = String(form.get("lastName") ?? "");
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+      } else if (data.session) {
+        // Email confirmation disabled → user is logged in immediately
+        setSubmitted(true);
+        // App.tsx redirects automatically
+      } else {
+        // Email confirmation enabled → user must click the link in the email
+        setSubmitted(true);
+        // The `a.notice` message should say "check your email"
+      }
+    }
+
+    setLoading(false);
   };
 
   const tabClass = (active: boolean) =>
@@ -93,6 +145,7 @@ export default function AuthForm() {
             placeholder={a.password}
             aria-label={a.password}
             required
+            minLength={6}
             className={inputClass}
           />
 
@@ -107,11 +160,21 @@ export default function AuthForm() {
             </div>
           )}
 
-          <button type="submit" className={`${btnPrimary} w-full`}>
-            {isLogin ? a.submitLogin : a.submitSignup}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`${btnPrimary} w-full disabled:cursor-not-allowed disabled:opacity-60`}
+          >
+            {loading ? "…" : isLogin ? a.submitLogin : a.submitSignup}
           </button>
 
-          {submitted && (
+          {error && (
+            <p role="alert" className="font-mono text-xs text-red-500">
+              {error}
+            </p>
+          )}
+
+          {submitted && !error && (
             <p role="status" className="font-mono text-xs text-muted">
               {a.notice}
             </p>
