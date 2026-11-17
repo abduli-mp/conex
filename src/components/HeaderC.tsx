@@ -1,10 +1,65 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import Logo from "../assets/conex_black.png";
 import LanguageSwitch from "./LanguageSwitch";
 import { btnPrimary } from "./ui";
+import { useAuth } from "../auth/useAuth";
 import { useLang } from "../i18n/useLang";
+
+type ActionsProps = {
+  onDone?: () => void;
+  focusable?: boolean;
+};
+
+function AccountActions({ onDone, focusable = true }: ActionsProps) {
+  const { session, ready, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { t } = useLang();
+  const tabIndex = focusable ? 0 : -1;
+
+  if (!ready) return null;
+
+  if (!session) {
+    return (
+      <Link
+        to="/create-account"
+        tabIndex={tabIndex}
+        onClick={onDone}
+        className={`${btnPrimary} h-9`}
+      >
+        {t.nav.signIn}
+      </Link>
+    );
+  }
+
+  const leave = () => {
+    onDone?.();
+    navigate("/", { replace: true });
+    void signOut();
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        tabIndex={tabIndex}
+        onClick={leave}
+        className="cursor-pointer font-mono text-sm text-muted transition-colors hover:text-foreground"
+      >
+        {t.nav.signOut}
+      </button>
+      <Link
+        to="/dashboard"
+        tabIndex={tabIndex}
+        onClick={onDone}
+        className={`${btnPrimary} h-9`}
+      >
+        {t.nav.dashboard}
+      </Link>
+    </>
+  );
+}
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,9 +116,7 @@ export default function Header() {
 
           <div className="hidden items-center gap-4 md:flex">
             <LanguageSwitch />
-            <Link to="/create-account" className={`${btnPrimary} h-9`}>
-              {t.nav.signIn}
-            </Link>
+            <AccountActions />
           </div>
 
           <button
@@ -122,14 +175,10 @@ export default function Header() {
             ))}
             <div className="mt-3 flex items-center gap-4">
               <LanguageSwitch />
-              <Link
-                to="/create-account"
-                tabIndex={menuOpen ? 0 : -1}
-                onClick={() => setMenuOpen(false)}
-                className={`${btnPrimary} h-9`}
-              >
-                {t.nav.signIn}
-              </Link>
+              <AccountActions
+                focusable={menuOpen}
+                onDone={() => setMenuOpen(false)}
+              />
             </div>
           </nav>
         </div>

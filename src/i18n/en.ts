@@ -12,6 +12,8 @@ export const en: Dict = {
     services: "services",
     contact: "contact",
     signIn: "Sign in",
+    signOut: "Sign out",
+    dashboard: "My area",
     menu: "Open or close menu",
     primary: "Main navigation",
   },
@@ -273,8 +275,79 @@ export const en: Dict = {
     forgot: "Forgot password?",
     submitLogin: "Sign in",
     submitSignup: "Create account",
-    notice: "The customer area is in preparation.",
+    passwordHint: "At least 12 characters, not your email address and no common words.",
+    noticeConfirm:
+      "Almost there. We sent a confirmation link to your email address. Open it to activate your account.",
     back: "back",
+    errors: {
+      invalid: "Email or password is incorrect.",
+      unconfirmed:
+        "Please confirm your email address first. The link is in your inbox.",
+      rateLimited: "Too many attempts. Please wait a moment and try again.",
+      weak: "That password is too easy to guess. Pick another one.",
+      taken:
+        "An account can't be created with this email address. Sign in or use another one.",
+      unavailable:
+        "The sign-in service can't be reached right now. Please try again shortly.",
+      locked: "Too many failed attempts. Try again in {seconds} seconds.",
+      emailInvalid: "Enter a valid email address.",
+      nameInvalid: "Names can only contain letters, spaces, hyphens and apostrophes.",
+      passwordShort: "The password needs at least 12 characters.",
+      passwordLong: "The password can be 72 bytes long at most.",
+      passwordWeak: "Avoid common words, your email address and repeated characters.",
+    },
+  },
+
+  dashboard: {
+    title: "Your tickets",
+    filterLabel: "Filter tickets by status",
+    filters: {
+      all: "All",
+      open: "Open",
+      in_progress: "In progress",
+      done: "Done",
+      cancelled: "Cancelled",
+    },
+    status: {
+      open: "Open",
+      in_progress: "In progress",
+      done: "Done",
+      cancelled: "Cancelled",
+    },
+    track: ["Received", "In progress", "Done"],
+    fields: {
+      problem: "Problem",
+      assignee: "Assigned to",
+      service: "Service",
+      created: "Created",
+      id: "Ticket ID",
+    },
+    unassigned: "Nobody assigned yet",
+    unknown: "Unavailable",
+    partial: "Service and technician names could not be loaded.",
+    loading: "Loading tickets",
+    loadError: "Your tickets could not be loaded.",
+    retry: "Reload tickets",
+    emptyTitle: "No tickets yet",
+    emptyText:
+      "Requests you send us show up here with their status and the person working on them.",
+    emptyAction: "Create a ticket",
+    emptyFiltered: "No tickets with this status.",
+    showAll: "Show all tickets",
+    account: {
+      title: "Account",
+      name: "Name",
+      email: "Email",
+      since: "Customer since",
+    },
+    newRequest: {
+      title: "Another problem?",
+      text: "Describe it in a few lines and we come back with a proposal.",
+      action: "Create a ticket",
+    },
+    help: {
+      title: "Questions about a ticket",
+    },
   },
 
   notFound: {

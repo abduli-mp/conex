@@ -56,7 +56,9 @@
   --color-primary-soft-hover: var(--color-blue-100);
 
   --color-success: #1f7a45;
-  --color-warning: #a56a12;
+  --color-success-soft: #e7f4ec;
+  --color-warning: #8a5608;
+  --color-warning-soft: #fbf1de;
   --color-error: #b93a2f;
 
   --shadow-card:

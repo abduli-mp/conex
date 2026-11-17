@@ -16,20 +16,22 @@ export default function Ticket() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const get = (key: string) => String(data.get(key) ?? "").trim();
+    // Single-line fields must not be able to break out into extra mail headers.
+    const line = (key: string) => get(key).replace(/[\r\n]+/g, " ");
 
-    const phone = get("phone");
+    const phone = line("phone");
     const lines = [
-      `${f.mailName}: ${get("name")}`,
-      `${f.mailEmail}: ${get("email")}`,
+      `${f.mailName}: ${line("name")}`,
+      `${f.mailEmail}: ${line("email")}`,
       ...(phone ? [`${f.mailPhone}: ${phone}`] : []),
-      `${f.mailDevice}: ${get("device")}`,
+      `${f.mailDevice}: ${line("device")}`,
       `${f.mailHandover}: ${f.handoverOptions[handover]}`,
       "",
       `${f.mailIssue}:`,
       get("issue"),
     ];
 
-    const subject = `${f.subject}: ${get("device")}`;
+    const subject = `${f.subject}: ${line("device")}`;
     window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(lines.join("\n"))}`;
@@ -52,6 +54,7 @@ export default function Ticket() {
                   name="name"
                   type="text"
                   required
+                  maxLength={100}
                   autoComplete="name"
                   className={inputClass}
                 />
@@ -64,6 +67,7 @@ export default function Ticket() {
                   name="email"
                   type="email"
                   required
+                  maxLength={254}
                   autoComplete="email"
                   className={inputClass}
                 />
@@ -78,6 +82,7 @@ export default function Ticket() {
                 <input
                   name="phone"
                   type="tel"
+                  maxLength={30}
                   autoComplete="tel"
                   className={inputClass}
                 />
@@ -101,6 +106,7 @@ export default function Ticket() {
               <textarea
                 name="issue"
                 required
+                maxLength={2000}
                 rows={6}
                 placeholder={f.issuePlaceholder}
                 className={`${inputClass} h-auto py-3`}

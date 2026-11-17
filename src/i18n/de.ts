@@ -10,6 +10,8 @@ export const de = {
     services: "leistungen",
     contact: "kontakt",
     signIn: "Anmelden",
+    signOut: "Abmelden",
+    dashboard: "Mein Bereich",
     menu: "Menü öffnen oder schließen",
     primary: "Hauptnavigation",
   },
@@ -272,8 +274,79 @@ export const de = {
     forgot: "Passwort vergessen?",
     submitLogin: "Anmelden",
     submitSignup: "Konto erstellen",
-    notice: "Der Kundenbereich ist in Vorbereitung.",
+    passwordHint: "Mindestens 12 Zeichen, nicht Ihre E-Mail-Adresse und keine gängigen Wörter.",
+    noticeConfirm:
+      "Fast geschafft. Wir haben Ihnen einen Bestätigungslink per E-Mail geschickt. Öffnen Sie ihn, um Ihr Konto zu aktivieren.",
     back: "zurück",
+    errors: {
+      invalid: "E-Mail oder Passwort stimmt nicht.",
+      unconfirmed:
+        "Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse. Der Link liegt in Ihrem Postfach.",
+      rateLimited: "Zu viele Versuche. Bitte warten Sie kurz und versuchen Sie es erneut.",
+      weak: "Dieses Passwort ist zu leicht zu erraten. Wählen Sie ein anderes.",
+      taken:
+        "Mit dieser E-Mail-Adresse lässt sich kein Konto anlegen. Melden Sie sich an oder nutzen Sie eine andere.",
+      unavailable:
+        "Der Anmeldedienst ist gerade nicht erreichbar. Bitte versuchen Sie es gleich noch einmal.",
+      locked: "Zu viele Fehlversuche. Nächster Versuch in {seconds} Sekunden.",
+      emailInvalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      nameInvalid: "Namen dürfen nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten.",
+      passwordShort: "Das Passwort braucht mindestens 12 Zeichen.",
+      passwordLong: "Das Passwort darf höchstens 72 Bytes lang sein.",
+      passwordWeak: "Vermeiden Sie gängige Wörter, Ihre E-Mail-Adresse und Wiederholungen.",
+    },
+  },
+
+  dashboard: {
+    title: "Ihre Tickets",
+    filterLabel: "Tickets nach Status filtern",
+    filters: {
+      all: "Alle",
+      open: "Offen",
+      in_progress: "In Bearbeitung",
+      done: "Erledigt",
+      cancelled: "Storniert",
+    },
+    status: {
+      open: "Offen",
+      in_progress: "In Bearbeitung",
+      done: "Erledigt",
+      cancelled: "Storniert",
+    },
+    track: ["Eingegangen", "In Bearbeitung", "Erledigt"],
+    fields: {
+      problem: "Problem",
+      assignee: "Zuständig",
+      service: "Leistung",
+      created: "Erstellt",
+      id: "Ticket-ID",
+    },
+    unassigned: "Noch niemand zugewiesen",
+    unknown: "Nicht verfügbar",
+    partial: "Leistungen und Zuständige konnten nicht geladen werden.",
+    loading: "Tickets werden geladen",
+    loadError: "Ihre Tickets konnten nicht geladen werden.",
+    retry: "Tickets neu laden",
+    emptyTitle: "Noch keine Tickets",
+    emptyText:
+      "Anfragen, die Sie uns schicken, erscheinen hier mit Status und der Person, die sich darum kümmert.",
+    emptyAction: "Ticket erstellen",
+    emptyFiltered: "Keine Tickets mit diesem Status.",
+    showAll: "Alle Tickets anzeigen",
+    account: {
+      title: "Konto",
+      name: "Name",
+      email: "E-Mail",
+      since: "Kunde seit",
+    },
+    newRequest: {
+      title: "Neues Problem?",
+      text: "Beschreiben Sie es kurz, wir melden uns mit einem Vorschlag.",
+      action: "Ticket erstellen",
+    },
+    help: {
+      title: "Rückfragen zu einem Ticket",
+    },
   },
 
   notFound: {
